@@ -30,7 +30,7 @@ export const WebSocketsExample: FC<WebSocketsExampleProps> = ({ className }) => 
   }, []);
 
   const sendMsg = (msg: string) => socket.emit('msg', { msg, name: profile?.name });
-  const onText = () => socket.emit('test', (a: number, b: number) => a + b); // Функция работать не будет
+  const onText = () => socket.emit('test', { a: 9, b: 3 });
 
   const onSend = () => {
     sendMsg(value);

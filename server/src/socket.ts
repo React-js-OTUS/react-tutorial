@@ -26,8 +26,10 @@ export const runSocket = () => {
       socket.emit('msgs', fakeDataBase);
     });
 
-    socket.on('test', (fun) => {
-      console.log(fun, fun(1, 3));
+    socket.on('test', ({ a, b }) => {
+      const result = a + b;
+      console.log(`Результат сложения: ${result}`);
+      socket.emit('testResult', result); // Отправка результата обратно клиенту, если необходимо.
     });
   });
 };
