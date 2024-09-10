@@ -1,7 +1,8 @@
-import { yupResolver } from "@corex/hook-form-yup-resolver";
+// import { yupResolver } from "@corex/hook-form-yup-resolver";
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import './goodsForm.css';
 
 // типизация полей
@@ -10,34 +11,31 @@ type Inputs = {
 };
 
 // Схема валидации
-const schema = yup
-    .object()
-    .shape({
-        goodsName: yup.string().required(),
-    })
+const schema = yup.object({
+    goodsName: yup.string().max(12).required(),
+});
 
 export const GoodsForm = () => {
 
-    const methods = useForm<Inputs>({
-        resolver: yupResolver(schema as any),
+    const { handleSubmit, reset, register, formState: { errors } } = useForm<Inputs>({
+        resolver: yupResolver(schema),
     });
-    const onSubmit = (data: any) => console.log(data);
+    const onSubmit = (data: Inputs) => {
+        console.log('Sended to server: ' + JSON.stringify(data));
+        reset();
+    }
 
     return (
-        <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
-                <div className="goods-form-container">
-                    <label>Наименование товара</label>
-                    <input id="goodsName" {...methods.register("goodsName")} />
-                    {methods.formState.errors.goodsName &&
-                        <p style={{ color: "red" }}> {methods.formState.errors.goodsName.message}</p>
-                    }
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="goods-form-container">
+                <label>Наименование товара</label>
+                <input id="goodsName" {...register("goodsName")} />
+                {errors.goodsName &&
+                    <p style={{ color: "red" }}> {errors.goodsName.message}</p>
+                }
 
-                    <input type="submit" />
-
-                </div>
-
-            </form>
-        </FormProvider>
+                <input type="submit" />
+            </div>
+        </form>
     );
 }

@@ -1,7 +1,7 @@
-import { yupResolver } from "@corex/hook-form-yup-resolver";
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // типизация полей
 type LoginFormFields = {
@@ -19,37 +19,33 @@ const validationSchem = yup
 
 export const LoginForm = () => {
 
-    const methods = useForm<LoginFormFields>(
-        { resolver: yupResolver(validationSchem as any) }
+    const { reset, handleSubmit, register, formState: { errors } } = useForm<LoginFormFields>(
+        { resolver: yupResolver(validationSchem) }
     );
 
     const handleOnSubmit = (data: LoginFormFields) => {
-        console.log(data);
-
-        methods.reset();
+        console.log('Data sended to server' + JSON.stringify(data));
+        reset();
     }
 
     return (
-        <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleOnSubmit)}>
-                <div>
-                    <label>Логин</label>
-                    <input id="login" {...methods.register("login")} />
-                    {methods.formState.errors.login &&
-                        <p style={{ color: "red" }}> {methods.formState.errors.login.message}</p>
-                    }
+        <form onSubmit={handleSubmit(handleOnSubmit)}>
+            <div>
+                <label>Логин</label>
+                <input id="login" {...register("login")} />
+                {errors.login &&
+                    <p style={{ color: "red" }}> {errors.login.message}</p>
+                }
 
-                    <label>Пароль</label>
-                    <input id="password" {...methods.register("password")} />
-                    {methods.formState.errors.password &&
-                        <p style={{ color: "red" }}> {methods.formState.errors.password.message}</p>
-                    }
+                <label>Пароль</label>
+                <input id="password" {...register("password")} />
+                {errors.password &&
+                    <p style={{ color: "red" }}> {errors.password.message}</p>
+                }
 
-                    <input type="submit" />
-                </div>
-            </form>
-        </FormProvider>
-
+                <input type="submit" />
+            </div>
+        </form>
     );
 
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@corex/hook-form-yup-resolver";
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // типизация полей
 type Inputs = {
@@ -30,7 +30,6 @@ export const UserProfileForm = () => {
     reset,
     watch,
     formState: { errors },
-    getValues,
   } = useForm<Inputs>({
     mode: "onSubmit",
     defaultValues: {
@@ -39,12 +38,11 @@ export const UserProfileForm = () => {
       document: "Паспорт",
       infoMethod: "",
     },
-    resolver: yupResolver(schema as any),
+    resolver: yupResolver(schema),
   });
 
-  const customHandleSubmit = (values: any) => {
-    console.log("values: ", values);
-
+  const customHandleSubmit = (values: Inputs) => {
+    console.log(`Values sended to server: ${JSON.stringify(values)}`);
     reset();
   };
 
