@@ -10,11 +10,14 @@
     "build": "webpack --mode production",
     "test": "jest src",
     "lint": "eslint src --fix",
-    "schemagen": "graphql-codegen && ts-node enhance.server.types.ts && node src/app/client/possibleTypesGen.js"
+    "schemagen": "graphql-codegen && ts-node enhance.server.types.ts && node src/app/client/possibleTypesGen.js",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@apollo/client": "^3.7.14",
+    "@corex/hook-form-yup-resolver": "^3.0.611",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
@@ -34,6 +37,7 @@
     "react-addons-shallow-compare": "^15.6.3",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.53.0",
     "react-i18next": "^12.2.0",
     "react-markdown": "^8.0.7",
     "react-redux": "^8.0.5",
@@ -41,18 +45,29 @@
     "redux-saga": "^1.2.3",
     "socket.io-client": "^4.7.2",
     "symbol-observable": "^4.0.0",
-    "unchanged": "^2.2.1"
+    "unchanged": "^2.2.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.4",
+    "@chromatic-com/storybook": "^1.8.0",
     "@graphql-codegen/cli": "^4.0.0",
     "@graphql-codegen/introspection": "^4.0.0",
     "@graphql-codegen/typescript": "^4.0.0",
     "@graphql-codegen/typescript-operations": "^4.0.0",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/addon-interactions": "^8.2.9",
+    "@storybook/addon-links": "^8.2.9",
+    "@storybook/addon-onboarding": "^8.2.9",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.5",
+    "@storybook/blocks": "^8.2.9",
+    "@storybook/react": "^8.2.9",
+    "@storybook/react-webpack5": "^8.2.9",
+    "@storybook/test": "^8.2.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -78,6 +93,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
@@ -89,6 +105,7 @@
     "prettier": "^2.8.7",
     "sass": "^1.61.0",
     "sass-loader": "^13.2.2",
+    "storybook": "^8.2.9",
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.2",
     "ts-jest": "^29.1.0",
@@ -97,5 +114,10 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
